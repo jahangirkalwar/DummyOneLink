@@ -47,8 +47,8 @@ public class AccountServiceImpl implements AccountService {
         if (!bank.isPresent()) {
             return new CustomResponseEntity(404, "bank not found!");
         }
-        Customer customer = customerRepo.findByEmail(accountDto.getEmail());
-        if (customer == null) {
+        Optional<Customer> customer = customerRepo.findByEmailAndBank(accountDto.getEmail(),accountDto.getBankCode());
+        if (!customer.isPresent()) {
             return new CustomResponseEntity("customer not exist");
         }
 
@@ -59,8 +59,8 @@ public class AccountServiceImpl implements AccountService {
         Account newAccount = accountMapper.dtoToJpe(accountDto);
         newAccount.setAccountNumber(accountNumber);
         newAccount.setIbanCode(ibanCode);
-        newAccount.setCustomer(customer);
-        newAccount.setAccountTitle(customer.getFirstName() +" "+customer.getLastName());
+        newAccount.setCustomer(customer.get());
+        newAccount.setAccountTitle(customer.get().getFirstName() +" "+customer.get().getLastName());
         newAccount.setAccountType(accountDto.getAccountType());
         newAccount.setBalance(0.00);
         newAccount.setCreatedAt(new Date());
