@@ -120,7 +120,7 @@ public class OneLinkServiceImpl implements OneLinkService {
             return new CustomResponseEntity(404, "bank not found against this code!");
         }
 
-        Account toAccount = accountRepository.findByAccountNumberOrIBanCodeAndBank_BankCode(transactionDto.getToAccountNumber(),transactionDto.getBankCode());
+        Account toAccount = accountRepository.findByAccountNumberOrIBanCodeAndBank_BankCode(transactionDto.getReceiverAccountNumber(),transactionDto.getBankCode());
 
         if(toAccount==null){
             return CustomResponseEntity.error("recipient account does not exist");

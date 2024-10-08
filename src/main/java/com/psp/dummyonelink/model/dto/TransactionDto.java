@@ -18,9 +18,9 @@ public class TransactionDto {
     @NotNull
     private String bankCode;
     @NotNull
-    private String fromAccountNumber;
+    private String senderAccountNumber;
     @NotNull
-    private String toAccountNumber;
+    private String receiverAccountNumber;
     @NotNull
     private Double amount;
     private Date transactionDate;
