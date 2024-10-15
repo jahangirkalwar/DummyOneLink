@@ -2,12 +2,14 @@ package com.psp.dummyonelink.model.mapper;
 
 import com.psp.dummyonelink.model.dto.PayAliasDto;
 import com.psp.dummyonelink.model.entity.PayAlias;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-02T11:40:49+0500",
+    date = "2024-10-15T14:24:37+0500",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.11 (Oracle Corporation)"
 )
 @Component
@@ -22,7 +24,9 @@ public class PayAliasMapperImpl implements PayAliasMapper {
         PayAliasDto payAliasDto = new PayAliasDto();
 
         payAliasDto.setOnePayId( payAlias.getOnePayId() );
-        payAliasDto.setCreationDate( payAlias.getCreationDate() );
+        if ( payAlias.getCreationDate() != null ) {
+            payAliasDto.setCreationDate( DateTimeFormatter.ISO_LOCAL_DATE.format( payAlias.getCreationDate() ) );
+        }
         payAliasDto.setStatus( payAlias.getStatus() );
 
         return payAliasDto;
@@ -37,7 +41,9 @@ public class PayAliasMapperImpl implements PayAliasMapper {
         PayAlias payAlias = new PayAlias();
 
         payAlias.setOnePayId( payAliasDto.getOnePayId() );
-        payAlias.setCreationDate( payAliasDto.getCreationDate() );
+        if ( payAliasDto.getCreationDate() != null ) {
+            payAlias.setCreationDate( LocalDate.parse( payAliasDto.getCreationDate() ) );
+        }
         payAlias.setStatus( payAliasDto.getStatus() );
 
         return payAlias;
