@@ -28,6 +28,8 @@ public class AccountDetailsDto {
     private String accountClosedReason;
     private String proofOfIncome;
     private String branchCode;
+    private String bankName;
+    private String icon;
 
 
 

@@ -11,4 +11,6 @@ public interface AccountService {
 
 
     CustomResponseEntity findAccountTitleByAccountNumberAndBank(String accountNumber,String bankCode);
+
+    CustomResponseEntity getDonationAccounts();
 }

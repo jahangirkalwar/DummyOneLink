@@ -36,4 +36,5 @@ public class Account {
     private Bank bank;
     @OneToMany(mappedBy = "toAccount", cascade = CascadeType.ALL)
     private List<OneLinkTransaction> receivedTransactions;
+    private String icon;
 }

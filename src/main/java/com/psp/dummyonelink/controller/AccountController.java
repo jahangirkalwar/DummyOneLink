@@ -4,6 +4,7 @@ import com.psp.dummyonelink.exception.CustomResponseEntity;
 import com.psp.dummyonelink.model.dto.AccountDto;
 import com.psp.dummyonelink.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +24,8 @@ public class AccountController {
 
 
 
-
+    @GetMapping("/getDonationAccounts")
+    CustomResponseEntity getDonationAccounts(){
+        return accountService.getDonationAccounts();
+    }
 }

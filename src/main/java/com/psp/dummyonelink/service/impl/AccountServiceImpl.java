@@ -1,6 +1,7 @@
 package com.psp.dummyonelink.service.impl;
 
 import com.psp.dummyonelink.exception.CustomResponseEntity;
+import com.psp.dummyonelink.model.dto.AccountDetailsDto;
 import com.psp.dummyonelink.model.dto.AccountDto;
 import com.psp.dummyonelink.model.entity.Account;
 import com.psp.dummyonelink.model.entity.Bank;
@@ -16,7 +17,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -78,6 +82,29 @@ public class AccountServiceImpl implements AccountService {
             return new CustomResponseEntity("Account does not exist");
         }
         return new CustomResponseEntity(HttpStatus.OK, accountTitle);
+    }
+
+    @Override
+    public CustomResponseEntity getDonationAccounts() {
+        List<Account> account = accountRepository.findAccountByAccountType("donations");
+        List<AccountDetailsDto> accountDetailsDtos = new ArrayList<>();
+        if (account.isEmpty()) {
+            return new CustomResponseEntity("Accounts does not exist");
+        }
+        for(Account acc : account) {
+            AccountDetailsDto accountDetailsDto = new AccountDetailsDto();
+            accountDetailsDto.setAccountBalance(acc.getBalance());
+            accountDetailsDto.setAccountNumber(acc.getAccountNumber());
+            accountDetailsDto.setAccountStatus(acc.getAccountStatus());
+            accountDetailsDto.setAccountClosedReason(acc.getAccountClosedReason());
+            accountDetailsDto.setAccountOpenDate(acc.getCreatedAt());
+            accountDetailsDto.setAccountTitle(acc.getAccountTitle());
+            accountDetailsDto.setAccountType(acc.getAccountType());
+            accountDetailsDto.setBankName(acc.getBank().getBankName());
+            accountDetailsDto.setIcon(acc.getIcon());
+            accountDetailsDtos.add(accountDetailsDto);
+        }
+        return new CustomResponseEntity(accountDetailsDtos,"");
     }
 
     private static String generateIbanNumber(String prefix,String bankCode) {

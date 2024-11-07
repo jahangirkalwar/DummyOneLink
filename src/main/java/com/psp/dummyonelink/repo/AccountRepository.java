@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<Account,Long> {
@@ -31,6 +32,9 @@ public interface AccountRepository extends JpaRepository<Account,Long> {
 
     @Query("SELECT c FROM Account c WHERE (c.accountNumber = :identifier OR c.ibanCode = :identifier) AND c.bank.bankName = :bankName")
     Account findByAccountNumberOrIBanCodeAndBank_BankName(@Param("identifier") String identifier, @Param("bankName") String bankName);
+
+    @Query("SELECT a FROM Account a WHERE a.accountType = :donations")
+    List<Account> findAccountByAccountType(@Param("donations") String donations);
 
 //    @Query("SELECT c from Account c where c.accountNumber = :identifier OR c.ibanCode = :identifier AND c.bank.bankName = :bankName")
 //    Account findByAccountNumberOrIBanCodeAndBank_BankName(@Param("identifier") String identifier, @Param("bankName") String bankName);
